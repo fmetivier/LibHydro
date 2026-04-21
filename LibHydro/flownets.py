@@ -3,6 +3,9 @@
 Created on Thu Nov 27 10:15:32 2014
 
 @author: metivier
+
+complex functions and solutions of Laplace equation
+
 """
 
 from pylab import *
@@ -152,8 +155,8 @@ def test_C_plot():
 
 
 def champs_CC2_g2():
-    """Deux solution de Laplace
-    phi = z^2 et phi = exp(y)cos(x)
+    """two Laplace equation solutions
+    phi = z^2 and phi = exp(y)cos(x)
     """
 
     cmap = cm.binary
@@ -202,6 +205,17 @@ def champs_CC2_g2():
 
 
 def RFU(d=1e-4,e=1e-6,L=1):
+    """RFU calculation according to the simple calculation proposed in textbook
+
+    Parameters
+    ----------
+    d : _type_, optional
+        _description_, by default 1e-4
+    e : _type_, optional
+        _description_, by default 1e-6
+    L : int, optional
+        _description_, by default 1
+    """
 
     cr = (np.pi/6)*((d+e)**3-d**3)
     RFU =  cr*(L/d)**3 
@@ -209,10 +223,9 @@ def RFU(d=1e-4,e=1e-6,L=1):
     print( RFU )
 
 
-RFU(1e-5,1e-6,1)
 
 def z2():
-    """Exemple de fonction complexe donnent une solution de l'équation de Laplace
+    """Sample complex Laplace solution
     """
 
     dmin = 0
@@ -249,7 +262,7 @@ def z2():
 
 
 def phys_ref():
-    """Description du plan physique
+    """Description of physical/mathematical plans
     """
 
     Nz=5
@@ -289,7 +302,7 @@ def phys_ref():
     plt.savefig('./figures/plan_p_plan_m.pdf', bbox_inches = 'tight')
 
 def w2():
-    """fonction z = w^2 utilisée dans la solution de Kozeny
+    """Kozeny z=w^2 solution (free surface flow in a dam)
     """
     
 
@@ -330,8 +343,7 @@ def w2():
     # plt.axis("equal")
 
 def w2_mapping():
-    """mapping de  w^2 utilisée dans la solution de Kozeny
-    """
+    """mapping of  w^2 used for Kozeny's solution """
     
 
     dmin = -1 # psi=1, phi=0
@@ -406,7 +418,7 @@ def w2_mapping():
     # plt.axis("equal")
 
 def glover():
-    """Solution de Glover d'un biseau salé
+    """Glover's solution for a salt wedge in an unconfined (linearized) flow
     """
     
 
@@ -447,6 +459,7 @@ def glover():
     # plt.savefig("./figures/glover.pdf", bbox_inches = 'tight')
     
 def verruijt():
+    """ Verruijt solution for an unconfined aquifer with salt wedge    """
 
     gamma = 25/1000
     Q = 0.5
@@ -511,6 +524,8 @@ def verruijt():
 #  Guérin aquifère profond
 ######################################################################################
 def plans_deep_aq():
+    """ conformal mapping description of Guérin's solution
+    """
 
     w=17/2.54
     h=w/3
@@ -565,7 +580,7 @@ def plans_deep_aq():
     
 
 def deep_aq():
-    """Solution de Guérin (2015)
+    """ Guérin (2015) for an infinitely deep free surface flow to a river (no rainfall)
     """
 
     Q=1
@@ -605,7 +620,9 @@ def deep_aq():
 ######################################################################################
 
 def polu_barrage_infini():
+    """Analytic solution by Polbariona-Kochina of a dam in an infinite aquifer 
 
+    """
     Q = 1 # débit
     K = 1 # conductivité
     b = 1 # 1/2 largeur du barrage
@@ -646,6 +663,28 @@ def polu_barrage_infini():
 
 
 def toth(z0=1000, s = 2000, alpha = 0.01 , a = 20 , lam =500, n = 100):
+    """Solution of Toth 1963 
+    
+    .. note:: 
+    
+        see https://hal.science/cel-01877908v13 for an explanation
+
+
+    Parameters
+    ----------
+    z0 : int, optional
+        _description_, by default 1000
+    s : int, optional
+        _description_, by default 2000
+    alpha : float, optional
+        _description_, by default 0.01
+    a : int, optional
+        _description_, by default 20
+    lam : int, optional
+        _description_, by default 500
+    n : int, optional
+        _description_, by default 100
+    """
 
     b = 2*np.pi/lam
     ap = a/np.cos(alpha)
@@ -695,7 +734,23 @@ def toth(z0=1000, s = 2000, alpha = 0.01 , a = 20 , lam =500, n = 100):
 
 
 def toth_artesian(z0=1000, s = 2000, alpha = 0.01 , a = 20 , lam =500, n = 100):
+    """Use of Toth solution to show artesian flows in unconfined flows
 
+    Parameters
+    ----------
+    z0 : int, optional
+        aquifer depth, by default 1000
+    s : int, optional
+        aquifer width, by default 2000
+    alpha : float, optional
+        _description_, by default 0.01
+    a : int, optional
+        _description_, by default 20
+    lam : int, optional
+        _description_, by default 500
+    n : int, optional
+        _description_, by default 100
+    """
     b = 2*np.pi/lam
     ap = a/np.cos(alpha)
     bp = b/np.cos(alpha)
@@ -736,6 +791,23 @@ def toth_artesian(z0=1000, s = 2000, alpha = 0.01 , a = 20 , lam =500, n = 100):
     
 
 def toth_boundaries(z0=1000, s = 2000, alpha = 0.02 , a = 10 , lam =500, n = 100):
+    """Graphic repsentation of the boundaries used by Toth for his solution
+
+    Parameters
+    ----------
+    z0 : int, optional
+        aquifer depth, by default 1000
+    s : int, optional
+        aquifer width, by default 2000
+    alpha : float, optional
+        _description_, by default 0.02
+    a : int, optional
+        _description_, by default 10
+    lam : int, optional
+        _description_, by default 500
+    n : int, optional
+        _description_, by default 100
+    """
 
     w=17/2.54
     h=w*z0/s
@@ -766,11 +838,29 @@ def toth_boundaries(z0=1000, s = 2000, alpha = 0.02 , a = 10 , lam =500, n = 100
     ax.text(s/2,0.9*z0,"$\phi=\phi_t$")
     ax.spines.top.set_visible(False)
 
-
-
     plt.savefig('../figures/toth_boundaries.pdf', bbox_inches='tight')
 
 def phi_n(m, ap, bp, cp,s):
+    """Individual member of the fourier sum  used for Toth solution
+
+    Parameters
+    ----------
+    m : _type_
+        _description_
+    ap : _type_
+        _description_
+    bp : _type_
+        _description_
+    cp : _type_
+        _description_
+    s : _type_
+        _description_
+
+    Returns
+    -------
+    float
+        _description_
+    """
     
     return ap*bp*(1-np.cos(bp*s)*np.cos(m*np.pi))/(bp**2 - m**2*np.pi**2 / s**2) + (cp * s**2)/(m**2 * np.pi**2)*(np.cos(m*np.pi)-1)
 
@@ -778,6 +868,8 @@ def phi_n(m, ap, bp, cp,s):
 
 
 if __name__ == '__main__':
+
+    # RFU(1e-5,1e-6,1)
     # ~ exercice_sol_cc2()
     # probleme_cc2()
     # porosite_cc2()
