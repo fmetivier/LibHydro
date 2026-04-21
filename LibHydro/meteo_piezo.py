@@ -1159,12 +1159,20 @@ def compute_piezo_from_files(pfile="", mfile="",ctd=False):
     pb = np.array(P_meteo)
     f = interp1d(tba, pb)
 
+    # Repositionnement à partir du 04/12
+    # 
+    ztot= - 13.336 + 20.997 - 0.64 # référence de map_topo mesures 11/2023
+    Ns = 5.8 # idem référence de map_topo
+    Ps=1080.342*0.98/100
+    Pm=1013.55/100
+    z_sonde = ztot-Ns-Ps+Pm
+    print(z_sonde)
 
     dp = np.diff(P_diver)
     t_fil, p_fil= [], []
     # correct from pressure
     for i in range(len(P_diver)):
-        P_diver[i] -= f(datetime.timestamp(t_diver[i]))
+        P_diver[i] = z_sonde + (P_diver[i] *0.98 - f(datetime.timestamp(t_diver[i])))/100
 
     # manque une mesure de ref et l'altitude de la margelle
     
@@ -1173,13 +1181,17 @@ def compute_piezo_from_files(pfile="", mfile="",ctd=False):
     fig,ax = plt.subplots(1,figsize=(20,10))
     # ax.plot(t_fil,p_fil,color='C0')
     # ax.plot(t_diver[1:],np.diff(P_diver)*P_diver[1:],marker='o', color='C1')
-    ax.plot(t_diver, P_diver, color='C1')
-    # ax.set_xlabel("Date")
-    # ax.set_ylabel("H au dessus de la sonde (cm)")
+    ax.plot(t_diver, P_diver, label="Niveau piézométrique (m asl)", color='C1')
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Niveau pizeométrique (m au dessus de la mer)", color='C1')
+    ax.legend(loc=1)
     ax2=ax.twinx()
     ax2.plot(t_diver,c_diver,color='C2', label='Conductivité (mS/cm)')
-
+    ax2.set_ylabel("Conductivité (mS/cm)", color='C2')
+    # ax2.set_xticklabels(color='C2')
+    ax2.legend(loc=2)
     # plt.plot(t_meteo,P_meteo,color='C1')
+    plt.savefig("Sonde_Ibrahim.pdf")
 
 
 
@@ -1212,7 +1224,7 @@ if __name__ == "__main__":
     
     # loadMeteoFrance(fname = "/home/metivier/Téléchargements/H_91_latest-2024-2025.csv")
 
-    pfile="/home/metivier/Nextcloud/Recherche/GroundWater/islands/data/Mayotte/PIEZO/JARDIN_IBRAHIM_260418142654_X8718.CSV"
-    mfile="/home/metivier/Nextcloud/Recherche/GroundWater/islands/data/Mayotte/METEO/DATAFILE_IBRAHIM.TXT"
+    pfile="../../../Recherche/GroundWater/islands/data/Mayotte/PIEZO/JARDIN_IBRAHIM_260418142654_X8718.CSV"
+    mfile="../../../Recherche/GroundWater/islands/data/Mayotte/METEO/DATAFILE_IBRAHIM.TXT"
     compute_piezo_from_files(pfile,mfile,ctd=True)
     plt.show()

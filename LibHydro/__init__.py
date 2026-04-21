@@ -10,7 +10,12 @@ __license__ = "CC-By-4.0"
 __version__ = "1.0"
 
 __all__ = [
-    "LibHydro"
+    "LibHydro",
+    "meteo_piezo",
+    "maps",
+    "flownets",
+    "lib_book",
+    "wells"
 ]
 
 #############################
@@ -47,6 +52,12 @@ from scipy.interpolate import RegularGridInterpolator
 from scipy.sparse.linalg import spsolve
 
 from copy import deepcopy
+
+from meteo_piezo import *
+from maps import *
+from lib_book import *
+from flownets import *
+from wells import *
 
 
 if __name__ == '__main__':
