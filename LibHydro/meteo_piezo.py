@@ -33,10 +33,8 @@ def weatherDB_connect(fname=None):
         mypass = f.readline().strip("\n")
         f.close()
     else:
-        mylogin = "root"
-        mypass = "iznogod01"
-        # mylogin = input("login:")
-        # mypass = getpass("password:")
+        mylogin = input("login:")
+        mypass = getpass("password:")
 
     engine = create_engine(
         "mysql://%s:%s@localhost/weatherDB" % (mylogin, mypass))
@@ -45,7 +43,7 @@ def weatherDB_connect(fname=None):
     return conn
 
 def piezo_connect(fname=None):
-    """Connexion à la base piezo
+    """Connexion to piezometric database
 
 
     Parameters
@@ -98,10 +96,8 @@ def DB_connect(fname=None, mybase='Mayotte'):
         mypass = f.readline().strip("\n")
         f.close()
     else:
-        mylogin = "root"
-        mypass = "iznogod01"
-        # mylogin = input("login:")
-        # mypass = getpass("password:")
+        mylogin = input("login:")
+        mypass = getpass("password:")
 
     engine = create_engine(
         "mysql://%s:%s@localhost/%s" % (mylogin, mypass, mybase))
@@ -242,10 +238,16 @@ def load_records(station_code="AV01", fname="Station_1.txt", dir="/home/metivier
     """Reads a meteolog file and loads TH and P
     data into the corresponding tables
 
-    BEWARE not to import the data twice or more...
+    .. note::
+        
+        BEWARE not to import the data twice or more...
 
-    params: station_code: str code of the meteorologic station
-    params: fname: str name of the file to be parsed
+    Parameters:
+    -----------
+        station_code: str 
+            code of the meteorologic station
+        fname: str 
+            name of the file to be parsed
     """
     conn = weatherDB_connect()
     f = open(dir + fname, "r")
@@ -292,10 +294,17 @@ def load_records(station_code="AV01", fname="Station_1.txt", dir="/home/metivier
 
 
 def TH_record(station_code="PA01", save=False):
-    """
-    temperature record of the station
+    """    temperature record of the station
     the record is stored in a mysql database
+
+    Parameters:
+    -----------
+        station_code: str
+            Station code, defaults to 'PA01'
+        save: boolean
+            save to file, defaults to False
     """
+
     conn = weatherDB_connect()
 
     sql = "select * from BME where station = '%s' " % (station_code)
@@ -413,7 +422,7 @@ def pressure_record(station_code="PA01", save=False, baro=False):
 
 def temperature_hour_avg(station_code="PA01"):
     """
-    hourly temperature plot from the database record
+    Hourly temperature plot from the database record
     """
     conn = weatherDB_connect()
 
@@ -487,7 +496,7 @@ def precip_new(station_code="PA01", stdate=[], edate=[], save=False):
 
 
 def daily_rain(station_code='AV01'):
-
+    
     conn = weatherDB_connect()
     sql = """select * from daily_rain where station = '%s' """ % (station_code)
 
