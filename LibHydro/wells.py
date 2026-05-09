@@ -1,7 +1,7 @@
 """
 
 Game of wells. 
-confined to be adapted for unconfined (change phi -> phi^2)
+For confined wells to be adapted for unconfined (change phi -> phi^2)
 
 """
 

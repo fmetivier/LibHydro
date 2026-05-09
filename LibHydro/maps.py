@@ -21,20 +21,19 @@ from sqlalchemy import create_engine
 #
 ###############################################################################
 
-def global_loc(cl = -180 , loc_point=(-15.103,-147.68)):
-    """Simple location map using cartopy. Location on globe using orthographic projection
+def global_loc(loc_points = [[-15.103,-147.68]], pr = ccrs.Orthographic(central_longitude=-180)):
+    """Simple location map using cartopy. Location on globe using (by default) orthographic projection
     Default location corrresponds to Rangiroa atoll in French Polynesia
 
     Parameters
-    ----------
-    cl : int, optional
-        central longitude, by default -180
-    loc_point : tuple, optional
+    ----------    
+    loc_points : list of list, optional
         Location position (lat,lon), by default (-15.103,-147.68)
+    pr : cartopy projection
+        map projection, by default orthographic
     """
     fig = plt.figure(figsize=(10, 10))
 
-    pr = ccrs.Orthographic(central_longitude=cl)
     ax = fig.add_subplot(111, projection=pr)
     # ~ ax=fig.add_subplot(111,projection=ccrs.Orthographic(central_longitude=47,central_latitude=-19))
     # in the case of world maps you can use the predefined datasets of NaturalEarth
@@ -49,7 +48,9 @@ def global_loc(cl = -180 , loc_point=(-15.103,-147.68)):
 
     ex = ax.get_extent(crs=ccrs.Geodetic())
 
-    ax.plot(loc_point[1], loc_point[0], marker='o', ms=12, color="C3", transform=ccrs.Geodetic())
+    for i in range(len(loc_points)):
+        print(loc_points[i])
+        ax.plot(loc_points[i][1], loc_points[i][0], marker='o', ms=12, color="C3", transform=ccrs.Geodetic())
 
     ax.gridlines(
         draw_labels=True,
@@ -66,4 +67,6 @@ def global_loc(cl = -180 , loc_point=(-15.103,-147.68)):
     plt.savefig("./travel.png", bbox_inches="tight")
 
 if __name__ == "__main__":
-    global_loc()
+    loc_points = [[-12.78,46.28],[-15.103,-147.68],[16.3437,-61.3903],[-20.9631,167.2342]]
+    global_loc( loc_points, ccrs.Mollweide())
+    # global_loc()

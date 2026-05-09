@@ -4,7 +4,7 @@ Created on Thu Nov 27 10:15:32 2014
 
 @author: metivier
 
-complex functions and solutions of Laplace equation
+Complex functions and solutions of Laplace equation
 
 """
 
