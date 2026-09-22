@@ -53,11 +53,11 @@ from scipy.sparse.linalg import spsolve
 
 from copy import deepcopy
 
-from meteo_piezo import *
-from maps import *
-from lib_book import *
-from flownets import *
-from wells import *
+from LibHydro.meteo_piezo import *
+from LibHydro.maps import *
+from LibHydro.lib_book import *
+from LibHydro.flownets import *
+from LibHydro.wells import *
 
 
 if __name__ == '__main__':

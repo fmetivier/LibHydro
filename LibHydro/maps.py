@@ -21,7 +21,7 @@ from sqlalchemy import create_engine
 #
 ###############################################################################
 
-def global_loc(loc_points = [[-15.103,-147.68]], pr = ccrs.Orthographic(central_longitude=-180)):
+def global_loc(loc_points = [[-15.103,-147.68]], pr = ccrs.Orthographic(central_longitude=-180), colors=['C3']):
     """Simple location map using cartopy. Location on globe using (by default) orthographic projection
     Default location corrresponds to Rangiroa atoll in French Polynesia
 
@@ -47,10 +47,13 @@ def global_loc(loc_points = [[-15.103,-147.68]], pr = ccrs.Orthographic(central_
     ax.coastlines()
 
     ex = ax.get_extent(crs=ccrs.Geodetic())
+    c = colors[0]
 
     for i in range(len(loc_points)):
         print(loc_points[i])
-        ax.plot(loc_points[i][1], loc_points[i][0], marker='o', ms=12, color="C3", transform=ccrs.Geodetic())
+        if len(colors) == len(loc_points) :
+            c = colors[i]
+        ax.plot(loc_points[i][1], loc_points[i][0], marker='o', ms=14, mfc = c, mec='k',  transform=ccrs.Geodetic())
 
     ax.gridlines(
         draw_labels=True,
@@ -67,6 +70,7 @@ def global_loc(loc_points = [[-15.103,-147.68]], pr = ccrs.Orthographic(central_
     plt.savefig("./travel.png", bbox_inches="tight")
 
 if __name__ == "__main__":
-    loc_points = [[-12.78,46.28],[-15.103,-147.68],[16.3437,-61.3903],[-20.9631,167.2342]]
-    global_loc( loc_points, ccrs.Mollweide())
+    loc_points = [[-12.78,46.28],[-15.103,-147.68],[16.3437,-61.3903],[-20.9631,167.2342],[-13.286857,-176.204714],[-7.850870,39.786844],[-32.003283,115.509825],[10.888827,72.749622]]
+    colors= ['C2','C1','C3','C0','C4','grey','grey','grey']
+    global_loc( loc_points, ccrs.Mollweide(), colors)
     # global_loc()

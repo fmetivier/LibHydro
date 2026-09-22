@@ -18,6 +18,16 @@ import cmath
 import pandas
 
 def fn_lin(a=1, b=1):
+    """Linear equation for Laplace equation
+    Phi = ax + by
+
+    Parameters
+    ----------
+    a : int, optional
+        x coefficient by default 1
+    b : int, optional
+        y coefficient, by default 1
+    """
 
     x = linspace(0, 10)
 
@@ -49,6 +59,13 @@ def fn_lin(a=1, b=1):
 
 
 def flow_net1(b=1):
+    """ hyperbolic solution
+
+    Parameters
+    ----------
+    b : int, optional
+        coefficient, by default 1
+    """
     x = linspace(0.1, 10, 1000)
 
     figure(figsize=(10, 10))
@@ -74,19 +91,6 @@ def flow_net1(b=1):
     show()
 
 
-def flow_net2(b=1): 
-
-    step = 5 * (arange(10) + 1)
-    x = linspace(1, 20, 100)
-    figure()
-    for s in step:
-        y = s / (2 * b * x)
-        plot(x, y, "r-")
-        psx = sqrt((b * x ** 2 + s) / b)
-        plot(psx, x, "b-")
-
-    show()
-
 
 
 def puitscaptif():
@@ -104,7 +108,7 @@ def puitscaptif():
     plot(arange(100), 0.05 * arange(100) + 4, "b-.")
     xlabel("Distance")
     ylabel("Charge")
-    savefig("./rabattement1D.svg", bbox_inches="tight")
+    # savefig("./rabattement1D.svg", bbox_inches="tight")
     show()
 
 

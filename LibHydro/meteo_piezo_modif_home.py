@@ -1209,7 +1209,8 @@ def compute_piezo_from_db(db="Mayotte", ctd=True):
     conn = piezo_connect(db=db)
     # csv diver file
     #
-    sql_query = "select * from sondeCTD where idp='JIB' and C>0.8 and P>1060 "
+    sql_query = "select * from sondeCTD where idp='JIB' and C>0.8"
+    # sql_query = "select * from sondeCTD where idp='JIB' and C>0.8 and P>1060 "
     res = conn.execute(sql_query).fetchall()
 
     t_diver,P_diver,T_diver = [],[],[]
@@ -1253,19 +1254,22 @@ def compute_piezo_from_db(db="Mayotte", ctd=True):
     print(z_sonde)
 
     dp = np.diff(P_diver)
-    t_fil, p_fil= [], []
+    t_cor, p_cor= [], []
     # correct from pressure
     for i in range(len(P_diver)):
-        P_diver[i] = z_sonde + (P_diver[i] *0.98 - f(datetime.timestamp(t_diver[i])))/100
+        try:
+            # P_diver[i] = z_sonde + (P_diver[i] *0.98 - f(datetime.timestamp(t_diver[i])))/100
+            p_cor.append( z_sonde + (P_diver[i] *0.98 - f(datetime.timestamp(t_diver[i])))/100 )
+            t_cor.append(t_diver[i])
+        except:
+            pass
 
     # manque une mesure de ref et l'altitude de la margelle
     
     print(np.min(P_diver))
 
     fig,ax = plt.subplots(1,figsize=(20,10))
-    # ax.plot(t_fil,p_fil,color='C0')
-    # ax.plot(t_diver[1:],np.diff(P_diver)*P_diver[1:],marker='o', color='C1')
-    ax.plot(t_diver, P_diver, label="Niveau piézométrique (m asl)", color='C1')
+    ax.plot(t_cor, p_cor, label="Niveau piézométrique (m asl)", color='C1')
     ax.set_xlabel("Date")
     ax.set_ylabel("Niveau pizeométrique (m au dessus de la mer)", color='C1')
     ax.legend(loc=1)
